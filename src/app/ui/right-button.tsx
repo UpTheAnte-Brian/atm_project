@@ -11,7 +11,7 @@ export function RightButton({ children, className, ...rest }: ButtonProps) {
       <button
         {...rest}
         className={clsx(
-          "h-10 mb-2 w-13 z-1 items-center rounded-lg bg-[#c1c1c1] px-4 transition-colors shadow-lg shadow-blue-300/50 hover:bg-blue-400 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:bg-blue-600  aria-disabled:opacity-50",
+          "h-10 mb-2 w-13 z-1 items-center rounded-lg bg-[#c1c1c1] px-2 transition-colors shadow-lg shadow-blue-300/50 hover:bg-blue-400 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:bg-blue-600  aria-disabled:opacity-50",
           className
         )}
       >

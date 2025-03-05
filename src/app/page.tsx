@@ -1,11 +1,15 @@
+"use client";
 import Image from "next/image";
 import logo from "../../public/atm_sign.png";
 import sysLogo from "../../public/systems.png";
 import creditcards from "../../public/creditcard_sprite.png";
 import graffiti from "../../public/sticker_graf.png";
-import UserInterface from "./ui/interface";
+import UserInterface from "./ui/user-interface";
+import { useState } from "react";
+import LoginInterface from "./ui/login-interface";
 
 export default function Home() {
+  const [isActive, setIsActive] = useState(false);
   return (
     <div className="items-center justify-items-center p-4">
       <Image
@@ -24,7 +28,11 @@ export default function Home() {
             className="pb-2"
             alt="Organization Logo"
           />
-          <UserInterface></UserInterface>
+          {isActive ? (
+            <UserInterface onExit={() => setIsActive(false)}></UserInterface>
+          ) : (
+            <LoginInterface onLogin={() => setIsActive(true)}></LoginInterface>
+          )}
           <Image
             src={sysLogo}
             width={54}

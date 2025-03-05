@@ -1,37 +1,59 @@
-const focusedBackground = `items-center  justify-center relative size-24 rounded-lg bg-gradient-to-b from-blue-500 to-blue-700 hover:shadow-lg`;
-const goldBackground =
-  "absolute bg-gradient-to-b from-yellow-200 to-yellow-300";
-export default function Pinpad() {
-  //     const el = HSPinInput.getInstance('#pin-input');
+"use client";
+import React, { useState, useRef, useEffect } from "react";
 
-  // el.on('completed', ({currentValue}) => {...});
+export default function Pinpad({
+  length,
+  onComplete,
+}: {
+  length: number;
+  onComplete: (pin: string) => void;
+}) {
+  const [pin, setPin] = useState(Array(length).fill(""));
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+
+  const handleInputChange = (index: number, value: string) => {
+    const newPin = [...pin];
+    newPin[index] = value;
+    setPin(newPin);
+
+    if (value && index < length - 1) {
+      inputRefs.current[index + 1]?.focus();
+    }
+  };
+
+  const handleKeyDown = (
+    index: number,
+    event: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (event.key === "Backspace" && !pin[index] && index > 0) {
+      inputRefs.current[index - 1]?.focus();
+    }
+  };
+
+  useEffect(() => {
+    if (pin.every((digit) => digit !== "" && digit !== undefined)) {
+      onComplete(pin.join(""));
+      inputRefs.current[length - 1]?.blur();
+    }
+  }, [pin, length, onComplete]);
+
   return (
-    <div className={focusedBackground}>
-      <div className={`inset-0 ${goldBackground}`}>
-        <div data-hs-pin-input className="flex gap-x-3">
-          <input
-            type="text"
-            data-hs-pin-input-item
-            className="block w-[38px] text-center border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-            autoFocus
-          />
-          <input
-            type="text"
-            data-hs-pin-input-item
-            className="block w-[38px] text-center border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-          />
-          <input
-            type="text"
-            data-hs-pin-input-item
-            className="block w-[38px] text-center border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-          />
-          <input
-            type="text"
-            data-hs-pin-input-item
-            className="block w-[38px] text-center border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-          />
-        </div>
-      </div>
+    <div>
+      {pin.map((digit, index) => (
+        <input
+          key={index}
+          type="text"
+          className="form-control border justify-center w-5 px-1"
+          pattern="^[0-9]+$"
+          autoFocus={index === 0}
+          value={digit}
+          onChange={(e) => handleInputChange(index, e.target.value)}
+          onKeyDown={(e) => handleKeyDown(index, e)}
+          ref={(el) => {
+            inputRefs.current[index] = el;
+          }}
+        />
+      ))}
     </div>
   );
 }
