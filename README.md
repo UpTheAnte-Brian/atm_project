@@ -22,4 +22,6 @@ Your task in this challenge is to build a demo web app that is a functional ATM 
 
 
 ## Notes
-Should I use routing for menu options? The code would 
+
+
+To run the app, clone the repo, npm run install, npm run dev.
