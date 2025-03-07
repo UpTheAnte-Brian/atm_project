@@ -46,6 +46,7 @@ export default function LoginInterface({ onLogin }: { onLogin: () => void }) {
                 length={4}
                 onComplete={() => {
                   setEnableLogin(true);
+                  document.getElementById("login")?.focus();
                 }}
               ></Pinpad>
             </div>
@@ -57,7 +58,6 @@ export default function LoginInterface({ onLogin }: { onLogin: () => void }) {
           <RightButton
             id="login"
             disabled={!enableLogin}
-            autoFocus={enableLogin}
             type="submit"
             onClick={() => onLogin()}
           >

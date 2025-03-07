@@ -1,5 +1,6 @@
 export interface State {
   balance: number;
+  pin: string;
   message: string | null;
   view: "main" | "withdrawal" | "deposit";
   errors: {

@@ -42,9 +42,9 @@ export default function Pinpad({
       {pin.map((digit, index) => (
         <input
           key={index}
-          type="text"
+          type="tel"
           className="form-control border justify-center w-5 px-1"
-          pattern="^[0-9]+$"
+          pattern="\d*"
           autoFocus={index === 0}
           value={digit}
           onChange={(e) => handleInputChange(index, e.target.value)}
